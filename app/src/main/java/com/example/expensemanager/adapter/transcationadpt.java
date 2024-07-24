@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.expensemanager.R;
 import com.example.expensemanager.databinding.RowBinding;
 import com.example.expensemanager.models.Transcation;
+import com.example.expensemanager.models.category;
+import com.example.expensemanager.utils.constants;
 import com.example.expensemanager.utils.helper;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class transcationadpt extends RecyclerView.Adapter<transcationadpt.transviewholder> {
     Context context;
@@ -35,22 +38,25 @@ public class transcationadpt extends RecyclerView.Adapter<transcationadpt.transv
 
     @Override
     public void onBindViewHolder(@NonNull transviewholder holder, int position) {
-        Transcation transcation=transactions.get(position);
-        holder.binding.transam.setText((String.valueOf(transcation.getAmmount())));
+        Transcation transcation = transactions.get(position);
+        holder.binding.transam.setText(String.valueOf(transcation.getAmmount()));
         holder.binding.type.setText(transcation.getType());
-
         holder.binding.transdate.setText(helper.formatedate(transcation.getDate()));
         holder.binding.transcat.setText(transcation.getCategory());
-        if(transcation.getType().equals("Income")){
-            holder.binding.transam.setTextColor(context.getColor(R.color.green));
 
-
+        category transca = constants.getcatdetails(transcation.getCategory());
+        if (transca != null) {
+            holder.binding.categoryicon.setImageResource(transca.getCatimg());
+        } else {
+            // Set a default image or hide the icon if category is not found
+            holder.binding.categoryicon.setImageResource(R.drawable.bus); // Make sure you have a default image
         }
-        else {
+
+        if (transcation.getType().equals("Income")) {
+            holder.binding.transam.setTextColor(context.getColor(R.color.green));
+        } else {
             holder.binding.transam.setTextColor(context.getColor(R.color.red));
         }
-
-
     }
 
     @Override

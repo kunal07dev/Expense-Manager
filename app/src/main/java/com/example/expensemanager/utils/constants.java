@@ -9,7 +9,7 @@ public class constants {
     public static ArrayList<category> categories;
     public static void setCategories() {
         categories=new ArrayList<>();
-        categories.add(new category("Buisness", R.drawable.briefcase));
+        categories.add(new category("Business", R.drawable.briefcase));
         categories.add(new category("Party", R.drawable.dance));
         categories.add(new category("Education", R.drawable.education));
         categories.add(new category("Food", R.drawable.fast_food));
@@ -18,5 +18,14 @@ public class constants {
         categories.add(new category("Beauty", R.drawable.makeup_pouch));
         categories.add(new category("Health", R.drawable.healthcare));
         categories.add(new category("Gift", R.drawable.gift));
+        categories.add(new category("Other", R.drawable.wallet));
+    }
+    public static category getcatdetails(String catname){
+        for(category cat:categories){
+            if(cat.getCatName().equals(catname)){
+                return cat;
+            }
+        }
+        return null;
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/moneyicon"
+        android:id="@+id/categoryicon"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
@@ -24,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/moneyicon"
+        app:layout_constraintStart_toEndOf="@+id/categoryicon"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

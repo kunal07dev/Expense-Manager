@@ -100,7 +100,7 @@ public class Addtrans extends BottomSheetDialogFragment {
 
 
                    });
-                   dialogBinding.recycleview.setLayoutManager(new GridLayoutManager(getContext(),3));
+                   dialogBinding.recycleview.setLayoutManager(new GridLayoutManager(getContext(),2));
                    dialogBinding.recycleview.setAdapter(adpter);
                    cate.show();
              });

@@ -7,17 +7,27 @@ public class Transcation {
     private Date date;
     private double ammount;
     private long id;
+    private  String account;
 
     public Transcation() {
     }
 
-    public Transcation(String type, String category, String note, Date date, double ammount, long id) {
+    public Transcation(String type, String category, String account,String note, Date date, double ammount, long id) {
         this.type = type;
         this.category = category;
         this.note = note;
         this.date = date;
         this.ammount = ammount;
+        this.account=account;
         this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getType() {
