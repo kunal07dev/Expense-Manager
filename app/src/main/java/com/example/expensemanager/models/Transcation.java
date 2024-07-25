@@ -2,10 +2,15 @@ package com.example.expensemanager.models;
 
 import java.util.Date;
 
-public class Transcation {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Transcation extends RealmObject {
     private String type ,category,note;
     private Date date;
     private double ammount;
+
+    @PrimaryKey
     private long id;
     private  String account;
 

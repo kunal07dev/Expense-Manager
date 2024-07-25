@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class constants {
     public static ArrayList<category> categories;
+
     public static void setCategories() {
         categories=new ArrayList<>();
         categories.add(new category("Business", R.drawable.briefcase));
