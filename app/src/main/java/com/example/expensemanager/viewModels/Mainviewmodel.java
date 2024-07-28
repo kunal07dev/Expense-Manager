@@ -1,6 +1,8 @@
 package com.example.expensemanager.viewModels;
 
 import static com.example.expensemanager.views.activities.MainActivity.selectedTab;
+import static com.example.expensemanager.views.fragments.StatsFragment.selectedTab_stats;
+import static com.example.expensemanager.views.fragments.StatsFragment.selectedtype;
 
 import android.app.Application;
 
@@ -19,6 +21,7 @@ import io.realm.RealmResults;
 
 public class Mainviewmodel  extends AndroidViewModel {
    public MutableLiveData<RealmResults<Transcation>> transaction= new MutableLiveData<>();
+    public MutableLiveData<RealmResults<Transcation>> catetransaction= new MutableLiveData<>();
    public MutableLiveData<Double>  totalincome=new MutableLiveData<>();
     public MutableLiveData<Double>  totalExpense=new MutableLiveData<>();
     public MutableLiveData<Double>  total=new MutableLiveData<>();
@@ -28,6 +31,53 @@ public class Mainviewmodel  extends AndroidViewModel {
         super(application);
         Realm.init(application);
         setupDatabase();
+    }
+    public void gettrans(Calendar calendar,String type) {
+        this.calendar = calendar;
+
+
+        RealmResults<Transcation> newtransactions =null;
+        if (selectedTab_stats == 0) {
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            Date startDate = calendar.getTime();
+            Date endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
+
+            newtransactions = realm.where(Transcation.class)
+                    .greaterThanOrEqualTo("date", startDate)
+                    .lessThan("date", endDate)
+                    .equalTo("type", selectedtype)
+                    .findAll();
+
+
+
+
+
+        } else if (selectedTab_stats == 1) {
+            calendar.set(Calendar.DAY_OF_MONTH,0);
+            Date starttime=calendar.getTime();
+            calendar.add(Calendar.MONTH,1);
+            Date endtime=calendar.getTime();
+            Date startDate = calendar.getTime();
+            Date endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
+
+
+            newtransactions = realm.where(Transcation.class)
+                    .greaterThanOrEqualTo("date", starttime)
+                    .lessThan("date", endtime)
+                    .equalTo("type", selectedtype)
+                    .findAll();
+
+
+
+        }
+        catetransaction.setValue(newtransactions);
+
+
+
     }
     public void gettrans(Calendar calendar) {
         this.calendar = calendar;
