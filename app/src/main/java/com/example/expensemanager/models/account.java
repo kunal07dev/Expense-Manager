@@ -1,8 +1,10 @@
 package com.example.expensemanager.models;
 
-public class account {
-    private double accountamount;
-    private String accountName;
+import io.realm.RealmObject;
+
+public class account  {
+    public double accountamount;
+    public String accountName;
     public account(){
 
     }

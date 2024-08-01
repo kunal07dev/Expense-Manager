@@ -152,7 +152,7 @@ public class Addtrans extends BottomSheetDialogFragment {
                 return;
             }
 
-            String note = binding.note.getText().toString();
+           // String note = binding.note.getText().toString();
             Double amt = Double.parseDouble(amount);
 
             if (transaction.getType().equals("Expense")) {
@@ -161,8 +161,13 @@ public class Addtrans extends BottomSheetDialogFragment {
             } else {
                 transaction.setAmmount(amt);
             }
+            if(type!=null&&!type.isEmpty()&&!account.isEmpty()&&!category.isEmpty()&&!date.isEmpty()&&!amount.isEmpty()){
+                Toast.makeText(getContext(), "transaction Save", Toast.LENGTH_SHORT).show();
 
-            transaction.setNote(note);
+
+            }
+
+          //  transaction.setNote(note);
 
             ((MainActivity) getActivity()).viewModel.addtran(transaction);
             ((MainActivity) getActivity()).getTransaction();

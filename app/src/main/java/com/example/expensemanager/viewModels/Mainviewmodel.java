@@ -1,10 +1,17 @@
 package com.example.expensemanager.viewModels;
 
-import static com.example.expensemanager.views.activities.MainActivity.selectedTab;
-import static com.example.expensemanager.views.fragments.StatsFragment.selectedTab_stats;
+import static android.provider.SyncStateContract.Helpers.update;
+import static com.example.expensemanager.views.activities.MainActivity.selectedTab_stats;
+
+
 import static com.example.expensemanager.views.fragments.StatsFragment.selectedtype;
 
+
+import static com.example.expensemanager.views.fragments.TransFragment.selectedTab;
+import static com.example.expensemanager.views.fragments.accountsFragment.selectedTab_account;
+
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -20,23 +27,31 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class Mainviewmodel  extends AndroidViewModel {
-   public MutableLiveData<RealmResults<Transcation>> transaction= new MutableLiveData<>();
+    public MutableLiveData<RealmResults<Transcation>> transaction= new MutableLiveData<>();
     public MutableLiveData<RealmResults<Transcation>> catetransaction= new MutableLiveData<>();
-   public MutableLiveData<Double>  totalincome=new MutableLiveData<>();
+    public MutableLiveData<RealmResults<Transcation>> accounttransaction= new MutableLiveData<>();
+
+
+    public MutableLiveData<Double>  totalincome=new MutableLiveData<>();
     public MutableLiveData<Double>  totalExpense=new MutableLiveData<>();
     public MutableLiveData<Double>  total=new MutableLiveData<>();
+    // public MutableLiveData<RealmResults<Note>> notes = new MutableLiveData<>();
     Realm realm;
     Calendar calendar;
+    Calendar calendar1;
     public Mainviewmodel(@NonNull Application application) {
         super(application);
         Realm.init(application);
         setupDatabase();
+        //getAllNotes();
     }
     public void gettrans(Calendar calendar,String type) {
-        this.calendar = calendar;
+        this.calendar = calendar1;
 
 
-        RealmResults<Transcation> newtransactions =null;
+
+
+        RealmResults<Transcation> newtransactions = null;
         if (selectedTab_stats == 0) {
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
@@ -53,14 +68,11 @@ public class Mainviewmodel  extends AndroidViewModel {
                     .findAll();
 
 
-
-
-
         } else if (selectedTab_stats == 1) {
-            calendar.set(Calendar.DAY_OF_MONTH,0);
-            Date starttime=calendar.getTime();
-            calendar.add(Calendar.MONTH,1);
-            Date endtime=calendar.getTime();
+            calendar.set(Calendar.DAY_OF_MONTH, 0);
+            Date starttime = calendar.getTime();
+            calendar.add(Calendar.MONTH, 1);
+            Date endtime = calendar.getTime();
             Date startDate = calendar.getTime();
             Date endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
 
@@ -72,20 +84,16 @@ public class Mainviewmodel  extends AndroidViewModel {
                     .findAll();
 
 
-
         }
         catetransaction.setValue(newtransactions);
-
-
-
     }
-    public void gettrans(Calendar calendar) {
+
+    public void gettran(Calendar calendar) {
         this.calendar = calendar;
-        double  income=0;
-        double expense=0;
-        double totall=0;
-        RealmResults<Transcation> newtransactions =null;
-        if (MainActivity.selectedTab == 0) {
+
+
+        RealmResults<Transcation> newtransactions= null;
+        if (selectedTab_account == 0) {
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
@@ -94,12 +102,54 @@ public class Mainviewmodel  extends AndroidViewModel {
             Date startDate = calendar.getTime();
             Date endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
 
-             newtransactions = realm.where(Transcation.class)
+            newtransactions = realm.where(Transcation.class)
+                    .greaterThanOrEqualTo("date", startDate)
+                    .lessThan("date", endDate)
+                       .equalTo("type",selectedtype)
+                    .findAll();
+
+
+        } else if (selectedTab_account == 1) {
+            calendar.set(Calendar.DAY_OF_MONTH, 0);
+            Date starttime = calendar.getTime();
+            calendar.add(Calendar.MONTH, 1);
+            Date endtime = calendar.getTime();
+            Date startDate = calendar.getTime();
+            Date endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
+
+
+            newtransactions = realm.where(Transcation.class)
+                    .greaterThanOrEqualTo("date", starttime)
+                    .lessThan("date", endtime)
+                    .equalTo("type",selectedtype)
+                    .findAll();
+
+
+        }
+        catetransaction.setValue(newtransactions);
+    }
+
+    public void gettrans(Calendar calendar) {
+        this.calendar = calendar;
+        double  income=0;
+        double expense=0;
+        double totall=0;
+        RealmResults<Transcation> newtransactions =null;
+        if (selectedTab == 0) {
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            Date startDate = calendar.getTime();
+            Date endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000));
+
+            newtransactions = realm.where(Transcation.class)
                     .greaterThanOrEqualTo("date", startDate)
                     .lessThan("date", endDate)
                     .findAll();
 
-             income = realm.where(Transcation.class)
+            income = realm.where(Transcation.class)
                     .greaterThanOrEqualTo("date", startDate)
                     .lessThan("date", endDate)
                     .equalTo("type", "Income")
@@ -107,7 +157,7 @@ public class Mainviewmodel  extends AndroidViewModel {
                     .doubleValue();
 
 
-             expense = realm.where(Transcation.class)
+            expense = realm.where(Transcation.class)
                     .greaterThanOrEqualTo("date", startDate)
                     .lessThan("date", endDate)
                     .equalTo("type", "Expense")
@@ -121,14 +171,14 @@ public class Mainviewmodel  extends AndroidViewModel {
                     .doubleValue();
 
 
-        } else if (MainActivity.selectedTab == 1) {
+        } else if (selectedTab == 1) {
             calendar.set(Calendar.DAY_OF_MONTH,0);
             Date starttime=calendar.getTime();
             calendar.add(Calendar.MONTH,1);
             Date endtime=calendar.getTime();
 
 
-             newtransactions = realm.where(Transcation.class)
+            newtransactions = realm.where(Transcation.class)
                     .greaterThanOrEqualTo("date", starttime)
                     .lessThan("date", endtime)
                     .findAll();
@@ -192,11 +242,15 @@ public class Mainviewmodel  extends AndroidViewModel {
         realm.commitTransaction();
         gettrans(calendar);
     }
-    void setupDatabase(){
-
-        realm=Realm.getDefaultInstance();
 
 
+
+    void setupDatabase() {
+        try {
+            realm = Realm.getDefaultInstance();
+        } catch (Exception e) {
+            Log.e("MainViewModel", "Error initializing Realm", e);
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="blue_light">#DCEEFD</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#2196F3</color>
     <color name="light_blue">#ADD8E6</color> <!-- Light blue -->
@@ -8,6 +8,13 @@
     <color name="textco">#383939</color>
     <color name="green">#26EC58</color>
     <color name="red">#FF1744</color>
+    <color name="black">#090909</color>
+    <color name="green_light">#BDE2B9</color>
+    <color name="purple_light">#B2B0EA</color>
+    <color name="peach">#F4B678</color>
+    <color name="light_orange">#F9E0A2</color>
+
+
 
 
 </resources>

@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.0.3")
     implementation ("com.github.AnyChart:AnyChart-Android:1.1.5")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")

@@ -17,7 +17,7 @@ import java.util.List;
 public class accountadpt extends RecyclerView.Adapter<accountadpt.AccountViewHolder> {
 
     private Context context;
-    private List<account> accountList;
+    public List<account> accountList;
     private accountsclickListener listener;
 
     public interface accountsclickListener {

@@ -14,6 +14,7 @@ import com.example.expensemanager.R;
 import com.example.expensemanager.databinding.ActivityMainBinding;
 import com.example.expensemanager.utils.constants;
 import com.example.expensemanager.viewModels.Mainviewmodel;
+import com.example.expensemanager.views.fragments.accountsFragment;
 import com.example.expensemanager.views.fragments.StatsFragment;
 import com.example.expensemanager.views.fragments.TransFragment;
 import com.google.android.material.navigation.NavigationBarView;
@@ -38,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(Mainviewmodel.class);
 
-
-
         constants.setCategories();
 
         calendar = Calendar.getInstance();
@@ -50,17 +49,22 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment = null;
+                String title = "";
+
                 if (item.getItemId() == R.id.Trans) {
-                    getSupportFragmentManager().popBackStack();
-                    transaction.replace(R.id.content, new TransFragment());
-                    transaction.commitAllowingStateLoss();
-                    return true;
+                    fragment = new TransFragment();
+                    title = "Transactions";
                 } else if (item.getItemId() == R.id.stats) {
-                    transaction.replace(R.id.content, new StatsFragment());
-                    transaction.addToBackStack(null);
-                    transaction.commitAllowingStateLoss();
-                    getSupportActionBar().setTitle("Statistics");
+                    fragment = new StatsFragment();
+                    title = "Statistics";
+                } else if (item.getItemId() == R.id.account) {
+                    fragment = new accountsFragment();
+                    title = "Accounts";
+                }
+
+                if (fragment != null) {
+                    replaceFragment(fragment, title);
                     return true;
                 }
                 return false;
@@ -76,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void getTransaction() {
         viewModel.gettrans(calendar);
+    }
+
+    private void replaceFragment(Fragment fragment, String title) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, fragment);
+        transaction.addToBackStack(null);
+        transaction.commitAllowingStateLoss();
+        getSupportActionBar().setTitle(title);
     }
 
     @Override

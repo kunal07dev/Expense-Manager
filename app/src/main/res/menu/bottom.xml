@@ -12,8 +12,4 @@
         android:id="@+id/account"
         android:icon="@drawable/accounting"
         android:title="Accounts" />
-    <item
-        android:id="@+id/more"
-        android:icon="@drawable/menu_burger"
-        android:title="More" />
 </menu>
