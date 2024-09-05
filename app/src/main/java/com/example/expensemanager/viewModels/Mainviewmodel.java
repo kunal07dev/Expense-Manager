@@ -105,7 +105,6 @@ public class Mainviewmodel  extends AndroidViewModel {
             newtransactions = realm.where(Transcation.class)
                     .greaterThanOrEqualTo("date", startDate)
                     .lessThan("date", endDate)
-                       .equalTo("type",selectedtype)
                     .findAll();
 
 
@@ -121,7 +120,6 @@ public class Mainviewmodel  extends AndroidViewModel {
             newtransactions = realm.where(Transcation.class)
                     .greaterThanOrEqualTo("date", starttime)
                     .lessThan("date", endtime)
-                    .equalTo("type",selectedtype)
                     .findAll();
 
 
