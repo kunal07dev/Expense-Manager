@@ -126,7 +126,7 @@ public class accountsFragment extends Fragment {
 
         for (Transcation transaction : transactions) {
             String account = transaction.getAccount();
-            float amount = (float) transaction.getAmmount();
+            float amount = (float) Math.abs(transaction.getAmmount());
             categoryMap.merge(account, amount, Float::sum);
             totalAmount += amount;
         }
