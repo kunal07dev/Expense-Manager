@@ -140,7 +140,6 @@ public class accountsFragment extends Fragment {
             }
             entries.add(new PieEntry(displayAmount, entry.getKey()));
         }
-
         if (entries.isEmpty()) {
             pieChart.setVisibility(View.GONE);
             binding.empty2.setVisibility(View.VISIBLE);

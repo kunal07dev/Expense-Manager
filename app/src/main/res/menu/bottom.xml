@@ -12,4 +12,10 @@
         android:id="@+id/account"
         android:icon="@drawable/accounting"
         android:title="Accounts" />
+    <item
+        android:id="@+id/limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/credit_score"
+        android:title="Limit" />
 </menu>

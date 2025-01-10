@@ -14,6 +14,7 @@ import com.example.expensemanager.R;
 import com.example.expensemanager.databinding.ActivityMainBinding;
 import com.example.expensemanager.utils.constants;
 import com.example.expensemanager.viewModels.Mainviewmodel;
+import com.example.expensemanager.views.fragments.BlankFragment;
 import com.example.expensemanager.views.fragments.accountsFragment;
 import com.example.expensemanager.views.fragments.StatsFragment;
 import com.example.expensemanager.views.fragments.TransFragment;
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.account) {
                     fragment = new accountsFragment();
                     title = "Accounts";
+                }
+                else if (item.getItemId() == R.id.limit) {
+                    fragment = new BlankFragment();
+                    title = "Limit";
                 }
 
                 if (fragment != null) {
